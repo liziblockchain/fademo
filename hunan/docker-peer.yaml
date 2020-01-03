@@ -7,8 +7,8 @@ version: '2'
 
 services:
 
- orderer.example.com:
-  container_name: orderer.example.com
+ orderer.hunangrid.com.cn:
+  container_name: orderer.hunangrid.com.cn
   image: hyperledger/fabric-orderer
   environment:
    - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=hunan_default
@@ -27,8 +27,8 @@ services:
   command: orderer
   volumes:
    - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-   - ./crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp:/var/hyperledger/orderer/msp
-   - ./crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/:/var/hyperledger/orderer/tls
+   - ./crypto-config/ordererOrganizations/hunangrid.com.cn/orderers/orderer.hunangrid.com.cn/msp:/var/hyperledger/orderer/msp
+   - ./crypto-config/ordererOrganizations/hunangrid.com.cn/orderers/orderer.hunangrid.com.cn/tls/:/var/hyperledger/orderer/tls
   networks:
    default:
     aliases:
@@ -128,37 +128,6 @@ services:
    - peer0.org1.example.com
 
 
- orderer.example.com:
-  container_name: orderer.example.com
-  image: hyperledger/fabric-orderer
-  environment:
-   - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=hunan_default
-   - ORDERER_GENERAL_LOGLEVEL=debug
-   - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
-   - ORDERER_GENERAL_LISTENPORT=7050
-   - ORDERER_GENERAL_GENESISMETHOD=file
-   - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block
-   - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
-   - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
-   - ORDERER_GENERAL_TLS_ENABLED=false
-   - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
-   - ORDERER_GENERAL_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
-   - ORDERER_GENERAL_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
-  working_dir: /opt/gopath/src/github.com/hyperledger/fabric
-  command: orderer
-  volumes:
-   - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-   - ./crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp:/var/hyperledger/orderer/msp
-   - ./crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/:/var/hyperledger/orderer/tls
-  networks:
-   default:
-    aliases:
-     - hunan
-  ports:
-    - 7050:7050
-
-
-
  peer0.org2.example.com:
    container_name: peer0.org2.example.com
    image: hyperledger/fabric-peer
@@ -195,8 +164,4 @@ services:
     default:
      aliases:
       - hunan
-
-
-
-
 

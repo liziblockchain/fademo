@@ -1,7 +1,4 @@
 this example has tested on fabric version 1.1.1
-put fabric binary to  src/github.com/hyperledger/fabric/bin dir
-put this folder on src/github.com/hyperledger/fabric/
-
 
 生成项目所需的文件
 cryptogen generate --config=./crypto-config.yaml
@@ -26,7 +23,9 @@ docker exec -it cli /bin/bash
 
 create channel
 #peer channel create -o orderer.example.com:7050 -c mychannel -t 50 -f ./chainel-artifacts/mychannel.tx
-peer channel create -o orderer.example.com:7050 -c mychannel -t 50s -f ./chainel-artifacts/mychannel.tx
+#peer channel create -o orderer.example.com:7050 -c mychannel -t 50s -f ./chainel-artifacts/mychannel.tx
+peer channel create -o orderer.hunangrid.com.cn:7050 -c mychannel -t 50s -f ./chainel-artifacts/mychannel.tx
+
 
 join channel
 peer channel join -b mychannel.block
@@ -35,7 +34,8 @@ install chaincode
 peer chaincode install -n mychannel -p github.com/hyperledger/fabric/hunan/chaincode/go -v 1.0
 
 instantiate chaincode
-peer chaincode instantiate -o orderer.example.com:7050 -C mychannel -n mychannel -c '{"Args":["init", "A", "10", "B", "20"]}' -P "OR ('Org1MSP.member')" -v 1.0
+#peer chaincode instantiate -o orderer.example.com:7050 -C mychannel -n mychannel -c '{"Args":["init", "A", "10", "B", "20"]}' -P "OR ('Org1MSP.member')" -v 1.0
+peer chaincode instantiate -o orderer.hunangrid.com.cn:7050 -C mychannel -n mychannel -c '{"Args":["init", "A", "10", "B", "20"]}' -P "OR ('Org1MSP.member')" -v 1.0
 
 query
 peer chaincode query -C mychannel -n mychannel -c '{"Args":["query", "B"]}'
