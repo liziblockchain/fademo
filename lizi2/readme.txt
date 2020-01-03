@@ -1,14 +1,6 @@
 this example has tested on fabric version 1.1.1
-
 put fabric binary to  src/github.com/hyperledger/fabric/bin dir
-
 put this folder on src/github.com/hyperledger/fabric/
-
-boot the sample
-docker-compose -f ./docker-peer.yaml up -d
-
-shutdown
-docker-compose -f ./docker-peer.yaml down
 
 
 生成项目所需的文件
@@ -23,8 +15,14 @@ peer node创建channel的配置文件
 configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/mychannel.tx -channelID mychannel
 
 
-docker exec -it cli /bin/bash
 
+boot the sample
+docker-compose -f ./docker-peer.yaml up -d
+
+shutdown
+docker-compose -f ./docker-peer.yaml down
+
+docker exec -it cli /bin/bash
 
 create channel
 #peer channel create -o orderer.example.com:7050 -c mychannel -t 50 -f ./chainel-artifacts/mychannel.tx
