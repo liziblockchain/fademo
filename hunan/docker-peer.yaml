@@ -7,8 +7,8 @@ version: '2'
 
 services:
 
- orderer.hunangrid.com:
-  container_name: orderer.hunangrid.com
+ orderer.example.com:
+  container_name: orderer.example.com
   image: hyperledger/fabric-orderer
   environment:
    - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=hunan_default
@@ -27,8 +27,8 @@ services:
   command: orderer
   volumes:
    - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-   - ./crypto-config/ordererOrganizations/hunangrid.com/orderers/orderer.hunangrid.com/msp:/var/hyperledger/orderer/msp
-   - ./crypto-config/ordererOrganizations/hunangrid.com/orderers/orderer.hunangrid.com/tls/:/var/hyperledger/orderer/tls
+   - ./crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp:/var/hyperledger/orderer/msp
+   - ./crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/:/var/hyperledger/orderer/tls
   networks:
    default:
     aliases:
@@ -51,26 +51,26 @@ services:
    - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
    - FABRIC_CA_SERVER_CA_NAME=ca
    - FABRIC_CA_SERVER_TLS_ENABLED=false
-   - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.hunangrid.com-cert.pem
+   - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem
    - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/20b8e9f03a565a056e10272266551b5692b399f418b2293de47e0fa841ed5b45_sk
   ports:
    - "7054:7054"
-  command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org1.hunangrid.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/20b8e9f03a565a056e10272266551b5692b399f418b2293de47e0fa841ed5b45_sk -b admin:adminpw -d'
+  command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/20b8e9f03a565a056e10272266551b5692b399f418b2293de47e0fa841ed5b45_sk -b admin:adminpw -d'
   volumes:
-   - ./crypto-config/peerOrganizations/org1.hunangrid.com/ca/:/etc/hyperledger/fabric-ca-server-config
+   - ./crypto-config/peerOrganizations/org1.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
 
 
- peer0.org1.hunangrid.com:
-   container_name: peer0.org1.hunangrid.com
+ peer0.org1.example.com:
+   container_name: peer0.org1.example.com
    image: hyperledger/fabric-peer
    environment:
     - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
     - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb:5984
-    - CORE_PEER_ID=peer0.org1.hunangrid.com
+    - CORE_PEER_ID=peer0.org1.example.com
     - CORE_PEER_NETWORKID=hunan
-    - CORE_PEER_ADDRESS=peer0.org1.hunangrid.com:7051
-    - CORE_PEER_CHAINCODELISTENADDRESS=peer0.org1.hunangrid.com:7052
-    - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org1.hunangrid.com:7051
+    - CORE_PEER_ADDRESS=peer0.org1.example.com:7051
+    - CORE_PEER_CHAINCODELISTENADDRESS=peer0.org1.example.com:7052
+    - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org1.example.com:7051
     - CORE_PEER_LOCALMSPID=Org1MSP
     - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
     - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=hunan
@@ -86,8 +86,8 @@ services:
     - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
    volumes:
     - /var/run/:/host/var/run/
-    - ./crypto-config/peerOrganizations/org1.hunangrid.com/peers/peer0.org1.hunangrid.com/msp:/etc/hyperledger/fabric/msp
-    - ./crypto-config/peerOrganizations/org1.hunangrid.com/peers/peer0.org1.hunangrid.com/tls:/etc/hyperledger/fabric/tls
+    - ./crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp:/etc/hyperledger/fabric/msp
+    - ./crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls:/etc/hyperledger/fabric/tls
    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
    command: peer node start
    ports:
@@ -111,13 +111,13 @@ services:
    - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
    - FABRIC_LOGGING_SPEC=DEBUG
    - CORE_PEER_ID=cli
-   - CORE_PEER_ADDRESS=peer0.org1.hunangrid.com:7051
+   - CORE_PEER_ADDRESS=peer0.org1.example.com:7051
    - CORE_PEER_LOCALMSPID=Org1MSP
    - CORE_PEER_TLS_ENABLED=false
-   - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.hunangrid.com/peers/peer0.org1.hunangrid.com/tls/server.crt
-   - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.hunangrid.com/peers/peer0.org1.hunangrid.com/tls/server.key
-   - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.hunangrid.com/peers/peer0.org1.hunangrid.com/tls/ca.crt
-   - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.hunangrid.com/users/Admin@org1.hunangrid.com/msp
+   - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.crt
+   - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.key
+   - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
+   - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
   working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
   volumes:
    - /var/run/:/host/var/run/
@@ -125,11 +125,11 @@ services:
    - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
    - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/chainel-artifacts
   depends_on:
-   - peer0.org1.hunangrid.com
+   - peer0.org1.example.com
 
 
- orderer.hunangrid.com:
-  container_name: orderer.hunangrid.com
+ orderer.example.com:
+  container_name: orderer.example.com
   image: hyperledger/fabric-orderer
   environment:
    - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=hunan_default
@@ -148,8 +148,8 @@ services:
   command: orderer
   volumes:
    - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-   - ./crypto-config/ordererOrganizations/hunangrid.com/orderers/orderer.hunangrid.com/msp:/var/hyperledger/orderer/msp
-   - ./crypto-config/ordererOrganizations/hunangrid.com/orderers/orderer.hunangrid.com/tls/:/var/hyperledger/orderer/tls
+   - ./crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp:/var/hyperledger/orderer/msp
+   - ./crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/:/var/hyperledger/orderer/tls
   networks:
    default:
     aliases:
@@ -159,15 +159,15 @@ services:
 
 
 
- peer0.org2.hunangrid.com:
-   container_name: peer0.org2.hunangrid.com
+ peer0.org2.example.com:
+   container_name: peer0.org2.example.com
    image: hyperledger/fabric-peer
    environment:
-    - CORE_PEER_ID=peer0.org2.hunangrid.com
+    - CORE_PEER_ID=peer0.org2.example.com
     - CORE_PEER_NETWORKID=hunan
-    - CORE_PEER_ADDRESS=peer0.org2.hunangrid.com:7051
-    - CORE_PEER_CHAINCODELISTENADDRESS=peer0.org2.hunangrid.com:7052
-    - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org2.hunangrid.com:7051
+    - CORE_PEER_ADDRESS=peer0.org2.example.com:7051
+    - CORE_PEER_CHAINCODELISTENADDRESS=peer0.org2.example.com:7052
+    - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org2.example.com:7051
     - CORE_PEER_LOCALMSPID=Org2MSP
     - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
     - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=hunan
@@ -183,8 +183,8 @@ services:
     - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
    volumes:
     - /var/run/:/host/var/run/
-    - ./crypto-config/peerOrganizations/org2.hunangrid.com/peers/peer0.org2.hunangrid.com/msp:/etc/hyperledger/fabric/msp
-    - ./crypto-config/peerOrganizations/org2.hunangrid.com/peers/peer0.org2.hunangrid.com/tls:/etc/hyperledger/fabric/tls
+    - ./crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp:/etc/hyperledger/fabric/msp
+    - ./crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls:/etc/hyperledger/fabric/tls
    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
    command: peer node start
    ports:
