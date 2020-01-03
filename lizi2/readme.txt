@@ -12,19 +12,23 @@ docker-compose -f ./docker-peer.yaml down
 
 
 生成项目所需的文件
-./bin/cryptogen generate --config=./crypto-config.yaml
+cryptogen generate --config=./crypto-config.yaml
 
 export FABRIC_CFG_PATH=$PWD
 
 创建 orderer genesis block
-./bin/configtxgen -profile TwoOrgsOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
+configtxgen -profile TwoOrgsOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
 
 peer node创建channel的配置文件
-./bin/configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/mychannel.tx -channelID mychannel
+configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/mychannel.tx -channelID mychannel
+
+
+docker exec -it cli /bin/bash
 
 
 create channel
-peer channel create -o orderer.example.com:7050 -c mychannel -t 50 -f ./chainel-artifacts/mychannel.tx
+#peer channel create -o orderer.example.com:7050 -c mychannel -t 50 -f ./chainel-artifacts/mychannel.tx
+peer channel create -o orderer.example.com:7050 -c mychannel -t 50s -f ./chainel-artifacts/mychannel.tx
 
 join channel
 peer channel join -b mychannel.block
@@ -35,9 +39,5 @@ peer chaincode install -n mychannel -p github.com/hyperledger/fabric/lizi2/chain
 instantiate chaincode
 peer chaincode instantiate -o orderer.example.com:7050 -C mychannel -n mychannel -c '{"Args":["init", "A", "10", "B", "20"]}' -P "OR ('Org1MSP.member')" -v 1.0
 
-query 
+query
 peer chaincode query -C mychannel -n mychannel -c '{"Args":["query", "B"]}'
-
-
-
-
