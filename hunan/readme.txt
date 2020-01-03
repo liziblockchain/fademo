@@ -34,8 +34,8 @@ install chaincode
 peer chaincode install -n mychannel -p github.com/hyperledger/fabric/hunan/chaincode/go -v 1.0
 
 instantiate chaincode
-#peer chaincode instantiate -o orderer.example.com:7050 -C mychannel -n mychannel -c '{"Args":["init", "A", "10", "B", "20"]}' -P "OR ('Org1MSP.member')" -v 1.0
-peer chaincode instantiate -o orderer.hunangrid.com.cn:7050 -C mychannel -n mychannel -c '{"Args":["init", "A", "10", "B", "20"]}' -P "OR ('Org1MSP.member')" -v 1.0
+#peer chaincode instantiate -o orderer.example.com:7050 -C mychannel -n mychannel -c '{"Args":["init", "A", "10", "B", "20"]}' -P "OR ('ShaoyangMSP.member')" -v 1.0
+peer chaincode instantiate -o orderer.hunangrid.com.cn:7050 -C mychannel -n mychannel -c '{"Args":["init", "A", "10", "B", "20"]}' -P "OR ('ShaoyangMSP.member')" -v 1.0
 
 query
 peer chaincode query -C mychannel -n mychannel -c '{"Args":["query", "B"]}'
