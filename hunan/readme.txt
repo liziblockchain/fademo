@@ -25,17 +25,23 @@ create channel
 #peer channel create -o orderer.example.com:7050 -c mychannel -t 50 -f ./chainel-artifacts/mychannel.tx
 #peer channel create -o orderer.example.com:7050 -c mychannel -t 50s -f ./chainel-artifacts/mychannel.tx
 peer channel create -o orderer.hunangrid.com.cn:7050 -c mychannel -t 50s -f ./chainel-artifacts/mychannel.tx
-
+docker exec cli peer channel create -o orderer.hunangrid.com.cn:7050 -c mychannel -t 50s -f ./chainel-artifacts/mychannel.tx
 
 join channel
 peer channel join -b mychannel.block
+docker exec cli peer channel join -b mychannel.block
 
 install chaincode
 peer chaincode install -n mychannel -p github.com/hyperledger/fabric/hunan/chaincode/go -v 1.0
+docker exec cli peer chaincode install -n mychannel -p github.com/hyperledger/fabric/hunan/chaincode/go -v 1.0
+
 
 instantiate chaincode
 #peer chaincode instantiate -o orderer.example.com:7050 -C mychannel -n mychannel -c '{"Args":["init", "A", "10", "B", "20"]}' -P "OR ('ShaoyangMSP.member')" -v 1.0
 peer chaincode instantiate -o orderer.hunangrid.com.cn:7050 -C mychannel -n mychannel -c '{"Args":["init", "A", "10", "B", "20"]}' -P "OR ('ShaoyangMSP.member')" -v 1.0
+docker exec cli peer chaincode instantiate -o orderer.hunangrid.com.cn:7050 -C mychannel -n mychannel -c '{"Args":["init", "A", "10", "B", "20"]}' -P "OR ('ShaoyangMSP.member')" -v 1.0
 
 query
 peer chaincode query -C mychannel -n mychannel -c '{"Args":["query", "B"]}'
+docker exec cli peer chaincode query -C mychannel -n mychannel -c '{"Args":["query", "B"]}'
+
