@@ -121,7 +121,7 @@ Orderer: &OrdererDefaults
 ################################################################################
 Profiles:
 
-    TwoOrgsOrdererGenesis:
+    HunanGridsOrdererGenesis:
         Orderer:
             <<: *OrdererDefaults
             Organizations:
@@ -131,7 +131,7 @@ Profiles:
                 Organizations:
                     - *Shaoyang
                     - *Changsha
-    TwoOrgsChannel:
+    HunanGridsChannel:
         Consortium: SampleConsortium
         Application:
             <<: *ApplicationDefaults

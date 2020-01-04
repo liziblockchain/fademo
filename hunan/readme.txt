@@ -6,10 +6,10 @@ cryptogen generate --config=./crypto-config.yaml
 export FABRIC_CFG_PATH=$PWD
 
 创建 orderer genesis block
-configtxgen -profile TwoOrgsOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
+configtxgen -profile HunanGridsOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
 
 peer node创建channel的配置文件
-configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/mychannel.tx -channelID mychannel
+configtxgen -profile HunanGridsChannel -outputCreateChannelTx ./channel-artifacts/mychannel.tx -channelID mychannel
 
 
 
