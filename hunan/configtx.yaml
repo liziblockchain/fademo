@@ -44,12 +44,12 @@ Organizations:
             - Host: peer0.shaoyang.hunangrid.net
               Port: 7051
 
-    - &Org2
-        Name: Org2MSP
-        ID: Org2MSP
-        MSPDir: crypto-config/peerOrganizations/org2.example.com/msp
+    - &Changsha
+        Name: ChangshaMSP
+        ID: ChangshaMSP
+        MSPDir: crypto-config/peerOrganizations/changsha.hunangrid.io/msp
         AnchorPeers:
-            - Host: peer0.org2.example.com
+            - Host: peer0.changsha.hunangrid.io
               Port: 7051
 
 ################################################################################
@@ -130,12 +130,12 @@ Profiles:
             SampleConsortium:
                 Organizations:
                     - *Shaoyang
-                    - *Org2
+                    - *Changsha
     TwoOrgsChannel:
         Consortium: SampleConsortium
         Application:
             <<: *ApplicationDefaults
             Organizations:
                 - *Shaoyang
-                - *Org2
+                - *Changsha
 

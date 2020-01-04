@@ -128,16 +128,16 @@ services:
    - peer0.shaoyang.hunangrid.net
 
 
- peer0.org2.example.com:
-   container_name: peer0.org2.example.com
+ peer0.changsha.hunangrid.io:
+   container_name: peer0.changsha.hunangrid.io
    image: hyperledger/fabric-peer
    environment:
-    - CORE_PEER_ID=peer0.org2.example.com
+    - CORE_PEER_ID=peer0.changsha.hunangrid.io
     - CORE_PEER_NETWORKID=hunan
-    - CORE_PEER_ADDRESS=peer0.org2.example.com:7051
-    - CORE_PEER_CHAINCODELISTENADDRESS=peer0.org2.example.com:7052
-    - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org2.example.com:7051
-    - CORE_PEER_LOCALMSPID=Org2MSP
+    - CORE_PEER_ADDRESS=peer0.changsha.hunangrid.io:7051
+    - CORE_PEER_CHAINCODELISTENADDRESS=peer0.changsha.hunangrid.io:7052
+    - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.changsha.hunangrid.io:7051
+    - CORE_PEER_LOCALMSPID=Changsha
     - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
     - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=hunan
     - FABRIC_LOGGING_SPEC=DEBUG
@@ -152,8 +152,8 @@ services:
     - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
    volumes:
     - /var/run/:/host/var/run/
-    - ./crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp:/etc/hyperledger/fabric/msp
-    - ./crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls:/etc/hyperledger/fabric/tls
+    - ./crypto-config/peerOrganizations/changsha.hunangrid.io/peers/peer0.changsha.hunangrid.io/msp:/etc/hyperledger/fabric/msp
+    - ./crypto-config/peerOrganizations/changsha.hunangrid.io/peers/peer0.changsha.hunangrid.io/tls:/etc/hyperledger/fabric/tls
    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
    command: peer node start
    ports:

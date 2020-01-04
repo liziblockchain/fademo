@@ -74,8 +74,8 @@ PeerOrgs:
   # ---------------------------------------------------------------------------
   # Org2: See "Org1" for full specification
   # ---------------------------------------------------------------------------
-  - Name: Org2
-    Domain: org2.example.com
+  - Name: Changsha
+    Domain: changsha.hunangrid.io
     Template:
       Count: 2
     Users:
