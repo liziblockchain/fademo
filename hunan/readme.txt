@@ -45,3 +45,7 @@ query
 peer chaincode query -C mychannel -n mychannel -c '{"Args":["query", "B"]}'
 docker exec cli peer chaincode query -C mychannel -n mychannel -c '{"Args":["query", "B"]}'
 
+transfer 
+peer chaincode invoke -C mychannel -n mychannel  -c '{"Args" : ["invoke", "A", "B", "1"]}'
+
+
