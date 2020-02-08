@@ -1,0 +1,20 @@
+
+version: '2'
+services:
+  cli-base:
+    image: hyperledger/fabric-tools
+    tty: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - FABRIC_LOGGING_SPEC=INFO
+      - CORE_PEER_ID=cli
+      - CORE_PEER_TLS_ENABLED=true
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../chaincode/go/:/opt/gopath/src/github.com/hyperledger/fabric/chaincode/go
+        - ../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ../scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+        - ../channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+
