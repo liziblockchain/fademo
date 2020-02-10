@@ -89,11 +89,11 @@ services:
       - zookeeper1
       - zookeeper2
 
-  orderer.example.com:
+  orderer.lizitime.com:
     extends:
       file:   base/docker-compose-base.yaml
-      service: orderer.example.com
-    container_name: orderer.example.com
+      service: orderer.lizitime.com
+    container_name: orderer.lizitime.com
     depends_on:
       - zookeeper0
       - zookeeper1

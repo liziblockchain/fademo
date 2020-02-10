@@ -3,6 +3,7 @@
 export FABRIC_CFG_PATH=$PWD
 CHANNEL_NAME=mychannel
 
+rm -rf channel-artifacts/ crypto-config
 mkdir channel-artifacts
 
 cryptogen generate --config=./crypto-config.yaml

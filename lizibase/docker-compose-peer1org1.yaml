@@ -1,0 +1,32 @@
+
+version: '2'
+
+services:
+
+  peer1.org1.lizitime.com:
+    container_name: peer1.org1.lizitime.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.org1.lizitime.com
+    extra_hosts:
+      - "orderer.lizitime.com:192.168.31.140"
+      - "peer0.org1.lizitime.com:192.168.31.140"
+
+  cli:
+    container_name: cli
+    extends:
+      file:  base/cli-base.yaml
+      service: cli-base
+    environment:
+      - CORE_PEER_ADDRESS=peer1.org1.lizitime.com:7051
+      - CORE_PEER_LOCALMSPID=Org1MSP
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.lizitime.com/peers/peer1.org1.lizitime.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.lizitime.com/peers/peer1.org1.lizitime.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.lizitime.com/peers/peer1.org1.lizitime.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.lizitime.com/users/Admin@org1.lizitime.com/msp
+    # command: /bin/bash -c './scripts/script.sh ${CHANNEL_NAME}; sleep $TIMEOUT'
+    depends_on:
+      - peer1.org1.lizitime.com
+    extra_hosts:
+      - "orderer.lizitime.com:192.168.31.140"
+      - "peer0.org1.lizitime.com:192.168.31.140"

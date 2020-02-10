@@ -22,8 +22,8 @@ public class EnrollAdmin {
 		// Create a CA client for interacting with the CA.
 		Properties props = new Properties();
 		props.put("pemFile",
-			// "../crypto-config/peerOrganizations/org2.example.com/ca/ca.org2.example.com-cert.pem");
-			"../crypto-config/peerOrganizations/org1.example.com/ca/ca.org1.example.com-cert.pem");
+			// "../crypto-config/peerOrganizations/org2.lizitime.com/ca/ca.org2.lizitime.com-cert.pem");
+			"../crypto-config/peerOrganizations/org1.lizitime.com/ca/ca.org1.lizitime.com-cert.pem");
 		props.put("allowAllHostNames", "true");
 		HFCAClient caClient = HFCAClient.createNewInstance("https://localhost:7054", props);
 		CryptoSuite cryptoSuite = CryptoSuiteFactory.getDefault().getCryptoSuite();

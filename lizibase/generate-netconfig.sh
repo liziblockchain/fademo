@@ -20,10 +20,10 @@ ORG=1
 P0PORT=7051
 P1PORT=8051
 CAPORT=7054
-PEERPEM=crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
-CAPEM=crypto-config/peerOrganizations/org1.example.com/ca/ca.org1.example.com-cert.pem
-# PEERPEM=crypto-config/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem
-# CAPEM=crypto-config/peerOrganizations/org2.example.com/ca/ca.org2.example.com-cert.pem
+PEERPEM=crypto-config/peerOrganizations/org1.lizitime.com/tlsca/tlsca.org1.lizitime.com-cert.pem
+CAPEM=crypto-config/peerOrganizations/org1.lizitime.com/ca/ca.org1.lizitime.com-cert.pem
+# PEERPEM=crypto-config/peerOrganizations/org2.lizitime.com/tlsca/tlsca.org2.lizitime.com-cert.pem
+# CAPEM=crypto-config/peerOrganizations/org2.lizitime.com/ca/ca.org2.lizitime.com-cert.pem
 
 echo "$(yaml_ccp $ORG $P0PORT $P1PORT $CAPORT $PEERPEM $CAPEM)" > netconfig-org1.yaml
 
