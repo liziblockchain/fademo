@@ -29,7 +29,7 @@ public class ClientApp {
 		try (Gateway gateway = builder.connect()) {
 
 			// get the network and contract
-			Network network = gateway.getNetwork("mychannel");
+			Network network = gateway.getNetwork("lizitimechannel");
 			Contract contract = network.getContract("mycc");
 
 			byte[] result;

@@ -1,18 +1,22 @@
 
 version: '2'
 
+volumes:
+  peer1.org1.lizitime.com:
+  cli.lizitime.com:
+
 services:
 
   peer1.org1.lizitime.com:
     container_name: peer1.org1.lizitime.com
     extends:
-      file:  base/docker-compose-base.yaml
+      file:  base/peer-base.yaml
       service: peer1.org1.lizitime.com
     extra_hosts:
       - "orderer.lizitime.com:192.168.31.140"
       - "peer0.org1.lizitime.com:192.168.31.140"
 
-  cli:
+  cli.lizitime.com:
     container_name: cli
     extends:
       file:  base/cli-base.yaml

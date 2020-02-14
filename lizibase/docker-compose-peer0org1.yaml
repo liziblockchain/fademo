@@ -1,9 +1,14 @@
 
 version: '2'
 
+volumes:
+  ca0.lizitime.com:
+  peer0.org1.lizitime.com:
+  cli.lizitime.com:
+
 services:
 
-  ca0:
+  ca0.lizitime.com:
     container_name: ca_peerOrg1
     image: hyperledger/fabric-ca
     environment:
@@ -11,23 +16,23 @@ services:
       - FABRIC_CA_SERVER_CA_NAME=ca-org1
       - FABRIC_CA_SERVER_TLS_ENABLED=true
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.lizitime.com-cert.pem
-      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/132856f17c9a32b9f6c8818f50e0ad01d629988a2b436018e0a6c4191b5b0a75_sk
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/cc14916ada153c7dacbbad79dbc2e50a98249bf3e41e002a1194adef04152823_sk
       - FABRIC_CA_SERVER_PORT=7054
     ports:
       - "7054:7054"
-    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org1.lizitime.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/132856f17c9a32b9f6c8818f50e0ad01d629988a2b436018e0a6c4191b5b0a75_sk -b admin:adminpw -d'
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org1.lizitime.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/cc14916ada153c7dacbbad79dbc2e50a98249bf3e41e002a1194adef04152823_sk -b admin:adminpw -d'
     volumes:
       - ./crypto-config/peerOrganizations/org1.lizitime.com/ca/:/etc/hyperledger/fabric-ca-server-config
 
   peer0.org1.lizitime.com:
     container_name: peer0.org1.lizitime.com
     extends:
-      file:  base/docker-compose-base.yaml
+      file:  base/peer-base.yaml
       service: peer0.org1.lizitime.com
     extra_hosts:
       - "orderer.lizitime.com:192.168.31.140"
 
-  cli:
+  cli.lizitime.com:
     container_name: cli
     extends:
       file:  base/cli-base.yaml

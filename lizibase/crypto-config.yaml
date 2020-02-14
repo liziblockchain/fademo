@@ -1,13 +1,19 @@
-
 # ---------------------------------------------------------------------------
 # "OrdererOrgs" - Definition of organizations managing orderer nodes
 # ---------------------------------------------------------------------------
 OrdererOrgs:
+  # ---------------------------------------------------------------------------
+  # Orderer
+  # ---------------------------------------------------------------------------
   - Name: Orderer
     Domain: lizitime.com
     EnableNodeOUs: true
     Specs:
       - Hostname: orderer
+      - Hostname: orderer2
+      - Hostname: orderer3
+      - Hostname: orderer4
+      - Hostname: orderer5
 
 # ---------------------------------------------------------------------------
 # "PeerOrgs" - Definition of organizations managing peer nodes
@@ -30,3 +36,4 @@ PeerOrgs:
       Count: 2
     Users:
       Count: 1
+

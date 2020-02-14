@@ -1,0 +1,90 @@
+
+version: '2'
+
+volumes:
+  orderer.lizitime.com:
+  orderer2.lizitime.com:
+  orderer3.lizitime.com:
+  orderer4.lizitime.com:
+  orderer5.lizitime.com:
+
+# networks:
+#   beqt:
+
+services:
+
+  orderer.lizitime.com:
+    extends:
+      file: base/orderer-base.yaml
+      service: orderer-base
+    container_name: orderer.lizitime.com
+    # networks:
+    #   - beqt
+    volumes:
+        - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+        - ./crypto-config/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp:/var/hyperledger/orderer/msp
+        - ./crypto-config/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/tls/:/var/hyperledger/orderer/tls
+        # - orderer.lizitime.com:/var/hyperledger/production/orderer
+    ports:
+    - 7050:7050
+
+
+  orderer2.lizitime.com:
+    extends:
+      file: base/orderer-base.yaml
+      service: orderer-base
+    container_name: orderer2.lizitime.com
+    # networks:
+    # - beqt
+    volumes:
+        - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+        - ./crypto-config/ordererOrganizations/lizitime.com/orderers/orderer2.lizitime.com/msp:/var/hyperledger/orderer/msp
+        - ./crypto-config/ordererOrganizations/lizitime.com/orderers/orderer2.lizitime.com/tls/:/var/hyperledger/orderer/tls
+        # - orderer2.lizitime.com:/var/hyperledger/production/orderer
+    ports:
+    - 8050:7050
+
+  orderer3.lizitime.com:
+    extends:
+      file: base/orderer-base.yaml
+      service: orderer-base
+    container_name: orderer3.lizitime.com
+    # networks:
+    # - beqt
+    volumes:
+        - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+        - ./crypto-config/ordererOrganizations/lizitime.com/orderers/orderer3.lizitime.com/msp:/var/hyperledger/orderer/msp
+        - ./crypto-config/ordererOrganizations/lizitime.com/orderers/orderer3.lizitime.com/tls/:/var/hyperledger/orderer/tls
+        # - orderer3.lizitime.com:/var/hyperledger/production/orderer
+    ports:
+    - 9050:7050
+
+  orderer4.lizitime.com:
+    extends:
+      file: base/orderer-base.yaml
+      service: orderer-base
+    container_name: orderer4.lizitime.com
+    # networks:
+    # - beqt
+    volumes:
+        - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+        - ./crypto-config/ordererOrganizations/lizitime.com/orderers/orderer4.lizitime.com/msp:/var/hyperledger/orderer/msp
+        - ./crypto-config/ordererOrganizations/lizitime.com/orderers/orderer4.lizitime.com/tls/:/var/hyperledger/orderer/tls
+        # - orderer4.lizitime.com:/var/hyperledger/production/orderer
+    ports:
+    - 10050:7050
+
+  orderer5.lizitime.com:
+    extends:
+      file: base/orderer-base.yaml
+      service: orderer-base
+    container_name: orderer5.lizitime.com
+    # networks:
+    # - beqt
+    volumes:
+        - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+        - ./crypto-config/ordererOrganizations/lizitime.com/orderers/orderer5.lizitime.com/msp:/var/hyperledger/orderer/msp
+        - ./crypto-config/ordererOrganizations/lizitime.com/orderers/orderer5.lizitime.com/tls/:/var/hyperledger/orderer/tls
+        # - orderer5.lizitime.com:/var/hyperledger/production/orderer
+    ports:
+    - 11050:7050

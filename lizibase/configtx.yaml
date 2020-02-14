@@ -1,13 +1,7 @@
 
 ---
-
 ################################################################################
-#
 #   Section: Organizations
-#
-#   - This section defines the different organizational identities which will
-#   be referenced later in the configuration.
-#
 ################################################################################
 Organizations:
 
@@ -67,8 +61,9 @@ Organizations:
 
 
 ################################################################################
+#   SECTION: Capabilities
+################################################################################
 Capabilities:
-
     Channel: &ChannelCapabilities
         V1_4_3: true
         V1_3: false
@@ -84,6 +79,8 @@ Capabilities:
         V1_2: false
         V1_1: false
 
+################################################################################
+#   SECTION: Application
 ################################################################################
 Application: &ApplicationDefaults
 
@@ -103,13 +100,13 @@ Application: &ApplicationDefaults
     Capabilities:
         <<: *ApplicationCapabilities
 
-
+################################################################################
+#   SECTION: Orderer
 ################################################################################
 Orderer: &OrdererDefaults
 
-    # Orderer Type: The orderer implementation to start
     # Available types are "solo","kafka"  and "etcdraft"
-    OrdererType: solo
+    OrdererType: etcdraft
     Addresses:
         - orderer.lizitime.com:7050
     BatchTimeout: 2s
@@ -118,12 +115,11 @@ Orderer: &OrdererDefaults
         AbsoluteMaxBytes: 4 MB
         PreferredMaxBytes: 512 KB
 
-    Kafka:
-        Brokers:
-            - 127.0.0.1:9092
+    # Kafka:
+    #     Brokers:
+    #         - 127.0.0.1:9092
 
-    # EtcdRaft defines configuration which must be set when the "etcdraft"
-    # orderertype is chosen.
+    # EtcdRaft defines configuration which must be set when the "etcdraft" orderertype is chosen.
     EtcdRaft:
         Consenters:
             - Host: orderer.lizitime.com
@@ -147,8 +143,7 @@ Orderer: &OrdererDefaults
               ClientTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer5.lizitime.com/tls/server.crt
               ServerTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer5.lizitime.com/tls/server.crt
 
-    # Organizations is the list of orgs which are defined as participants on
-    # the orderer side of the network
+    # Organizations is the list of orgs which are defined as participants on the orderer side of the network
     Organizations:
 
     Policies:
@@ -166,7 +161,10 @@ Orderer: &OrdererDefaults
             Rule: "ANY Writers"
 
 ################################################################################
+#   CHANNEL
+################################################################################
 Channel: &ChannelDefaults
+
     Policies:
         Readers:
             Type: ImplicitMeta
@@ -181,10 +179,10 @@ Channel: &ChannelDefaults
     Capabilities:
         <<: *ChannelCapabilities
 
-
+################################################################################
+#   Profile
 ################################################################################
 Profiles:
-
 
     TwoOrgsOrdererGenesis:
         <<: *ChannelDefaults
@@ -211,7 +209,6 @@ Profiles:
             Capabilities:
                 <<: *ApplicationCapabilities
 
-
     # SampleDevModeKafka:
     #     <<: *ChannelDefaults
     #     Capabilities:
@@ -237,65 +234,53 @@ Profiles:
     #             - *Org1
     #             - *Org2
 
-    # SampleMultiNodeEtcdRaft:
-    #     <<: *ChannelDefaults
-    #     Capabilities:
-    #         <<: *ChannelCapabilities
-    #     Orderer:
-    #         <<: *OrdererDefaults
-    #         OrdererType: etcdraft
-    #         EtcdRaft:
-    #             Consenters:
-    #             - Host: orderer.lizitime.com
-    #               Port: 7050
-    #               ClientTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/tls/server.crt
-    #               ServerTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/tls/server.crt
-    #             - Host: orderer2.lizitime.com
-    #               Port: 7050
-    #               ClientTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer2.lizitime.com/tls/server.crt
-    #               ServerTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer2.lizitime.com/tls/server.crt
-    #             - Host: orderer3.lizitime.com
-    #               Port: 7050
-    #               ClientTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer3.lizitime.com/tls/server.crt
-    #               ServerTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer3.lizitime.com/tls/server.crt
-    #             - Host: orderer4.lizitime.com
-    #               Port: 7050
-    #               ClientTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer4.lizitime.com/tls/server.crt
-    #               ServerTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer4.lizitime.com/tls/server.crt
-    #             - Host: orderer5.lizitime.com
-    #               Port: 7050
-    #               ClientTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer5.lizitime.com/tls/server.crt
-    #               ServerTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer5.lizitime.com/tls/server.crt
-    #         Addresses:
-    #             - orderer.lizitime.com:7050
-    #             - orderer2.lizitime.com:7050
-    #             - orderer3.lizitime.com:7050
-    #             - orderer4.lizitime.com:7050
-    #             - orderer5.lizitime.com:7050
+    SampleMultiNodeEtcdRaft:
+        <<: *ChannelDefaults
+        Capabilities:
+            <<: *ChannelCapabilities
+        Orderer:
+            <<: *OrdererDefaults
+            OrdererType: etcdraft
+            EtcdRaft:
+                Consenters:
+                - Host: orderer.lizitime.com
+                  Port: 7050
+                  ClientTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/tls/server.crt
+                - Host: orderer2.lizitime.com
+                  Port: 7050
+                  ClientTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer2.lizitime.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer2.lizitime.com/tls/server.crt
+                - Host: orderer3.lizitime.com
+                  Port: 7050
+                  ClientTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer3.lizitime.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer3.lizitime.com/tls/server.crt
+                - Host: orderer4.lizitime.com
+                  Port: 7050
+                  ClientTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer4.lizitime.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer4.lizitime.com/tls/server.crt
+                - Host: orderer5.lizitime.com
+                  Port: 7050
+                  ClientTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer5.lizitime.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer5.lizitime.com/tls/server.crt
+            Addresses:
+                - orderer.lizitime.com:7050
+                - orderer2.lizitime.com:7050
+                - orderer3.lizitime.com:7050
+                - orderer4.lizitime.com:7050
+                - orderer5.lizitime.com:7050
 
-    #         Organizations:
-    #         - *OrdererOrg
-    #         Capabilities:
-    #             <<: *OrdererCapabilities
-    #     Application:
-    #         <<: *ApplicationDefaults
-    #         Organizations:
-    #         - <<: *OrdererOrg
-    #     Consortiums:
-    #         SampleConsortium:
-    #             Organizations:
-    #             - *Org1
-    #             - *Org2
-
-
-
-
-#------------------------------------------------------------------------------------
-#------------------------------------------------------------------------------------
-#------------------------------------------------------------------------------------
-#------------------------------------------------------------------------------------
-#------------------------------------------------------------------------------------
-#------------------------------------------------------------------------------------
-#------------------------------------------------------------------------------------
-
+            Organizations:
+            - *OrdererOrg
+            Capabilities:
+                <<: *OrdererCapabilities
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+            - <<: *OrdererOrg
+        Consortiums:
+            SampleConsortium:
+                Organizations:
+                - *Org1
+                - *Org2
 

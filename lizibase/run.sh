@@ -7,9 +7,10 @@ IF_COUCHDB="$4"
 : ${CLI_TIMEOUT:="10000"}
 
 #COMPOSE_FILE=docker-compose-cli.yaml
-COMPOSE_FILE=docker-compose-orderer.yaml
+# COMPOSE_FILE=docker-compose-orderer.yaml
+COMPOSE_FILE=docker-compose-etcdraft2.yaml
 COMPOSE_FILE_PEER0ORG1=docker-compose-peer0org1.yaml
-COMPOSE_FILE_COUCH=docker-compose-couch.yaml
+# COMPOSE_FILE_COUCH=docker-compose-couch.yaml
 #COMPOSE_FILE=docker-compose-e2e.yaml
 
 function printHelp () {
@@ -82,40 +83,42 @@ function startTest () {
 
     DELAY=2S
     echo "lizitime-----------:  create channel"
-    docker exec cli peer channel create -o orderer.lizitime.com:7050 -c mychannel -f ./channel-artifacts/channel.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp/tlscacerts/tlsca.lizitime.com-cert.pem
+    docker exec cli peer channel create -o orderer.lizitime.com:7050 -c lizitimechannel -f ./channel-artifacts/channel.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp/tlscacerts/tlsca.lizitime.com-cert.pem
 
     sleep $DELAY
     echo "lizitime-----------:  join channel"
-    docker exec cli peer channel join -b mychannel.block
+    # docker exec cli peer channel join -b mychannel.block
+    docker exec cli peer channel join -b lizitimechannel.block
 
     sleep $DELAY
     echo "lizitime-----------:  install chaincode"
     docker exec cli peer chaincode package -n mycc -v 1.0 -p github.com/hyperledger/fabric/chaincode/go  myccpack.out
 
-#    sleep $DELAY
-#    echo "lizitime-----------:  "
+    #    sleep $DELAY
+    #    echo "lizitime-----------:  "
     docker exec cli peer chaincode install myccpack.out
 
     sleep $DELAY
     echo "lizitime-----------:  instantiate chaincode"
-    docker exec cli peer chaincode instantiate -o orderer.lizitime.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp/tlscacerts/tlsca.lizitime.com-cert.pem -C mychannel -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}'
+    docker exec cli peer chaincode instantiate -o orderer.lizitime.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp/tlscacerts/tlsca.lizitime.com-cert.pem -C lizitimechannel -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}'
 
         # -P "OR ('Org1MSP.peer','Org2MSP.peer')" 
 
     sleep $DELAY
     echo "lizitime-----------:  query a"
-    docker exec cli peer chaincode query -C mychannel -n mycc -c '{"Args":["query", "a"]}'
+    docker exec cli peer chaincode query -C lizitimechannel -n mycc -c '{"Args":["query", "a"]}'
     echo "lizitime-----------:  query b"
-    docker exec cli peer chaincode query -C mychannel -n mycc -c '{"Args":["query", "b"]}'
+    docker exec cli peer chaincode query -C lizitimechannel -n mycc -c '{"Args":["query", "b"]}'
 
     echo "lizitime-----------:  invoke chaincode"
-    docker exec cli peer chaincode invoke -C mychannel -n mycc  -c '{"Args":["invoke", "a", "b", "1"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp/tlscacerts/tlsca.lizitime.com-cert.pem
+    docker exec cli peer chaincode invoke -C lizitimechannel -n mycc  -c '{"Args":["invoke", "a", "b", "1"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp/tlscacerts/tlsca.lizitime.com-cert.pem
 
     sleep $DELAY
     echo "lizitime-----------:  query a"
-    docker exec cli peer chaincode query -C mychannel -n mycc -c '{"Args":["query", "a"]}'
+    docker exec cli peer chaincode query -C lizitimechannel -n mycc -c '{"Args":["query", "a"]}'
     echo "lizitime-----------:  query b"
-    docker exec cli peer chaincode query -C mychannel -n mycc -c '{"Args":["query", "b"]}'
+    docker exec cli peer chaincode query -C lizitimechannel -n mycc -c '{"Args":["query", "b"]}'
+
 }
 
 function networkDown () {
@@ -138,8 +141,8 @@ validateArgs
 #Create the network using docker compose
 if [ "${UP_DOWN}" == "up" ]; then
 	networkUp
-    sleep 10
-	startTest
+    # sleep 15
+	# startTest
 elif [ "${UP_DOWN}" == "down" ]; then ## Clear the network
 	networkDown
 elif [ "${UP_DOWN}" == "test" ]; then ## Clear the network
