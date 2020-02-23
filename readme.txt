@@ -1,1 +1,2 @@
-this is the demo code of hyperledger fabric
+this is demo code for hyperledger fabric, with etcd consensus, multi host deployment
+
