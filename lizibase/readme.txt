@@ -1,10 +1,15 @@
-this has tested on fabric v1.4.4
+this has tested on fabric v1.4.9
 
-note:
+Usage:
+./run.sh up    // start it
+./run.sh down  // stop it
+
+Note:
 1. use etcdRaft consensus
 2. worked on multi hosts
 3. Java client works
 4. if Re-build cert files, must update CA peer cert files, otherwise, Java Client cann't work
+5. WARNING: the IP Address of filed: extra_hosts in docker-compose-peer0org1.yaml & docker-compose-peer1org1.yaml maybe cause it CANN't work, change it accordingly.
 
 ---------------------------------------------------------------------------
 commands list:
@@ -21,12 +26,12 @@ docker exec cli peer channel join -b lizitimechannel.block
 # package chaincode
 docker exec cli peer chaincode package -n mycc -v 1.0 -p github.com/hyperledger/fabric/chaincode/go  myccpack.out
 
-# install chaincode
+# install chaincode¡
 docker exec cli peer chaincode install myccpack.out
 
 # instantiate chaincode
 docker exec cli peer chaincode instantiate -o orderer.lizitime.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp/tlscacerts/tlsca.lizitime.com-cert.pem -C lizitimechannel -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}'
-# -P "OR ('Org1MSP.peer','Org2MSP.peer')" 
+# -P "OR ('Org1MSP.peer','Org2MSP.peer')"
 
 # query chaincode
 docker exec cli peer chaincode query -C lizitimechannel -n mycc -c '{"Args":["query", "a"]}'

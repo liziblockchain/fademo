@@ -30,7 +30,7 @@ services:
       file:  base/peer-base.yaml
       service: peer0.org1.lizitime.com
     extra_hosts:
-      - "orderer.lizitime.com:192.168.31.140"
+      - "orderer.lizitime.com:192.168.3.1"
 
   cli.lizitime.com:
     container_name: cli
@@ -48,4 +48,4 @@ services:
     depends_on:
       - peer0.org1.lizitime.com
     extra_hosts:
-      - "orderer.lizitime.com:192.168.31.140"
+      - "orderer.lizitime.com:192.168.3.1"
