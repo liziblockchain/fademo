@@ -45,27 +45,33 @@ function removeUnwantedImages() {
 }
 
 function networkUp () {
-    if [ -d "./crypto-config" ]; then
-      echo "crypto-config directory already exists."
-    fi
+  if [ -d "./crypto-config" ]; then
+    echo "crypto-config directory already exists."
+  fi
 
-    docker-compose -f $COMPOSE_FILE -f $COMPOSE_FILE_PEER0ORG1 up -d
+  docker-compose -f $COMPOSE_FILE -f $COMPOSE_FILE_PEER0ORG1 up -d
 
-    if [ $? -ne 0 ]; then
-	echo "ERROR !!!! Unable to pull the images "
-	exit 1
-    fi
+  if [ $? -ne 0 ]; then
+		echo "ERROR !!!! Unable to pull the images "
+		exit 1
+  fi
 }
 
 function startTest () {
 
-    DELAY=2S
+    DELAY=3S
     echo "lizitime-----------:  create channel"
     docker exec cli peer channel create -o orderer.lizitime.com:7050 -c lizitimechannel -f ./channel-artifacts/channel.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp/tlscacerts/tlsca.lizitime.com-cert.pem
+
+		# docker exec cli peer channel create -o orderer.lizitime.com:7050 -c lizitimechannel -f ./channel-artifacts/channel.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp/tlscacerts/tlsca.lizitime.com-cert.pem
+
+		# peer channel create -o localhost:7050 -c mychannel --ordererTLSHostnameOverride orderer.example.com -f ./channel-artifacts/mychannel.tx --outputBlock ./channel-artifacts/mychannel.block --tls --cafile /work/fabric/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+
 
     sleep $DELAY
     echo "lizitime-----------:  join channel"
     docker exec cli peer channel join -b lizitimechannel.block
+    # peer channel join -b ./channel-artifacts/mychannel.block
 
     sleep $DELAY
     echo "lizitime-----------:  install chaincode"
@@ -75,22 +81,36 @@ function startTest () {
 
     sleep $DELAY
     echo "lizitime-----------:  instantiate chaincode"
-    docker exec cli peer chaincode instantiate -o orderer.lizitime.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp/tlscacerts/tlsca.lizitime.com-cert.pem -C lizitimechannel -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}'
+    # docker exec cli peer chaincode instantiate -o orderer.lizitime.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp/tlscacerts/tlsca.lizitime.com-cert.pem -C lizitimechannel -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}'
+		docker exec cli peer chaincode instantiate -o orderer.lizitime.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp/tlscacerts/tlsca.lizitime.com-cert.pem -C lizitimechannel -n mycc -v 1.0 -c '{"function":"InitLedger","Args":[]}'
 
     sleep $DELAY
-    echo "lizitime-----------:  query a"
-    docker exec cli peer chaincode query -C lizitimechannel -n mycc -c '{"Args":["query", "a"]}'
-    echo "lizitime-----------:  query b"
-    docker exec cli peer chaincode query -C lizitimechannel -n mycc -c '{"Args":["query", "b"]}'
+    # echo "lizitime-----------:  query a"
+    # docker exec cli peer chaincode query -C lizitimechannel -n mycc -c '{"Args":["query", "a"]}'
+    echo "lizitime-----------:  query GetAllAssets"
+    # docker exec cli peer chaincode query -C lizitimechannel -n mycc -c '{"Args":["query", "b"]}'
+		docker exec cli peer chaincode query -C lizitimechannel -n mycc -c '{"Args":["GetAllAssets"]}'
 
-    echo "lizitime-----------:  invoke chaincode"
-    docker exec cli peer chaincode invoke -C lizitimechannel -n mycc  -c '{"Args":["invoke", "a", "b", "1"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp/tlscacerts/tlsca.lizitime.com-cert.pem
+		sleep $DELAY
+		echo "lizitime-----------:  query asset6"
+    # docker exec cli peer chaincode query -C lizitimechannel -n mycc -c '{"Args":["query", "b"]}'
+		docker exec cli peer chaincode query -C lizitimechannel -n mycc -c '{"Args":["ReadAsset","asset6"]}'
+
+    echo "lizitime-----------:  invoke chaincode, change asset6"
+    # docker exec cli peer chaincode invoke -C lizitimechannel -n mycc  -c '{"Args":["invoke", "a", "b", "1"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp/tlscacerts/tlsca.lizitime.com-cert.pem
+
+		docker exec cli peer chaincode invoke -C lizitimechannel -n mycc  -c '{"function":"TransferAsset","Args":["asset6","Christopher"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp/tlscacerts/tlsca.lizitime.com-cert.pem
+
+    # peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n basic --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" -c '{"function":"TransferAsset","Args":["asset6","Christopher"]}'
 
     sleep $DELAY
-    echo "lizitime-----------:  query a"
-    docker exec cli peer chaincode query -C lizitimechannel -n mycc -c '{"Args":["query", "a"]}'
-    echo "lizitime-----------:  query b"
-    docker exec cli peer chaincode query -C lizitimechannel -n mycc -c '{"Args":["query", "b"]}'
+    # echo "lizitime-----------:  query a"
+    # docker exec cli peer chaincode query -C lizitimechannel -n mycc -c '{"Args":["query", "a"]}'
+    echo "lizitime-----------:  query asset6"
+    # docker exec cli peer chaincode query -C lizitimechannel -n mycc -c '{"Args":["query", "b"]}'
+		docker exec cli peer chaincode query -C lizitimechannel -n mycc -c '{"Args":["ReadAsset","asset6"]}'
+
+    # peer chaincode query -C mychannel -n basic -c '{"Args":["ReadAsset","asset6"]}'
 
 }
 
