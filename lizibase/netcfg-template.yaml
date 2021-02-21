@@ -11,29 +11,29 @@ organizations:
   Org${ORG}:
     mspid: Org${ORG}MSP
     peers:
-    - peer0.org${ORG}.lizitime.com
-    - peer1.org${ORG}.lizitime.com
+    - peer0.org${ORG}.liziblockchain.com
+    - peer1.org${ORG}.liziblockchain.com
     certificateAuthorities:
-    - ca.org${ORG}.lizitime.com
+    - ca.org${ORG}.liziblockchain.com
 peers:
-  peer0.org${ORG}.lizitime.com:
+  peer0.org${ORG}.liziblockchain.com:
     url: grpcs://localhost:${P0PORT}
     tlsCACerts:
       pem: |
         ${PEERPEM}
     grpcOptions:
-      ssl-target-name-override: peer0.org${ORG}.lizitime.com
-      hostnameOverride: peer0.org${ORG}.lizitime.com
-  peer1.org${ORG}.lizitime.com:
+      ssl-target-name-override: peer0.org${ORG}.liziblockchain.com
+      hostnameOverride: peer0.org${ORG}.liziblockchain.com
+  peer1.org${ORG}.liziblockchain.com:
     url: grpcs://localhost:${P1PORT}
     tlsCACerts:
       pem: |
         ${PEERPEM}
     grpcOptions:
-      ssl-target-name-override: peer1.org${ORG}.lizitime.com
-      hostnameOverride: peer1.org${ORG}.lizitime.com
+      ssl-target-name-override: peer1.org${ORG}.liziblockchain.com
+      hostnameOverride: peer1.org${ORG}.liziblockchain.com
 certificateAuthorities:
-  ca.org${ORG}.lizitime.com:
+  ca.org${ORG}.liziblockchain.com:
     url: https://localhost:${CAPORT}
     caName: ca-org${ORG}
     tlsCACerts:

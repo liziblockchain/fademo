@@ -8,7 +8,7 @@ Organizations:
     - &OrdererOrg
         Name: OrdererOrg
         ID: OrdererMSP
-        MSPDir: crypto-config/ordererOrganizations/lizitime.com/msp
+        MSPDir: crypto-config/ordererOrganizations/liziblockchain.com/msp
         Policies:
             Readers:
                 Type: Signature
@@ -24,7 +24,7 @@ Organizations:
     - &Org1
         Name: Org1MSP
         ID: Org1MSP
-        MSPDir: crypto-config/peerOrganizations/org1.lizitime.com/msp
+        MSPDir: crypto-config/peerOrganizations/org1.liziblockchain.com/msp
         Policies:
             Readers:
                 Type: Signature
@@ -36,7 +36,7 @@ Organizations:
                 Type: Signature
                 Rule: "OR('Org1MSP.admin')"
         AnchorPeers:
-            - Host: peer0.org1.lizitime.com
+            - Host: peer0.org1.liziblockchain.com
               Port: 7051
 
 
@@ -44,7 +44,7 @@ Organizations:
     - &Org2
         Name: Org2MSP
         ID: Org2MSP
-        MSPDir: crypto-config/peerOrganizations/org2.lizitime.com/msp
+        MSPDir: crypto-config/peerOrganizations/org2.liziblockchain.com/msp
         Policies:
             Readers:
                 Type: Signature
@@ -56,7 +56,7 @@ Organizations:
                 Type: Signature
                 Rule: "OR('Org2MSP.admin')"
         AnchorPeers:
-            - Host: peer0.org2.lizitime.com
+            - Host: peer0.org2.liziblockchain.com
               Port: 7051
 
 
@@ -108,7 +108,7 @@ Orderer: &OrdererDefaults
     # Available types are "solo","kafka"  and "etcdraft"
     OrdererType: etcdraft
     Addresses:
-        - orderer.lizitime.com:7050
+        - orderer.liziblockchain.com:7050
     BatchTimeout: 2s
     BatchSize:
         MaxMessageCount: 10
@@ -122,26 +122,26 @@ Orderer: &OrdererDefaults
     # EtcdRaft defines configuration which must be set when the "etcdraft" orderertype is chosen.
     EtcdRaft:
         Consenters:
-            - Host: orderer.lizitime.com
+            - Host: orderer.liziblockchain.com
               Port: 7050
-              ClientTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/tls/server.crt
-              ServerTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/tls/server.crt
-            - Host: orderer2.lizitime.com
+              ClientTLSCert: crypto-config/ordererOrganizations/liziblockchain.com/orderers/orderer.liziblockchain.com/tls/server.crt
+              ServerTLSCert: crypto-config/ordererOrganizations/liziblockchain.com/orderers/orderer.liziblockchain.com/tls/server.crt
+            - Host: orderer2.liziblockchain.com
               Port: 7050
-              ClientTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer2.lizitime.com/tls/server.crt
-              ServerTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer2.lizitime.com/tls/server.crt
-            - Host: orderer3.lizitime.com
+              ClientTLSCert: crypto-config/ordererOrganizations/liziblockchain.com/orderers/orderer2.liziblockchain.com/tls/server.crt
+              ServerTLSCert: crypto-config/ordererOrganizations/liziblockchain.com/orderers/orderer2.liziblockchain.com/tls/server.crt
+            - Host: orderer3.liziblockchain.com
               Port: 7050
-              ClientTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer3.lizitime.com/tls/server.crt
-              ServerTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer3.lizitime.com/tls/server.crt
-            - Host: orderer4.lizitime.com
+              ClientTLSCert: crypto-config/ordererOrganizations/liziblockchain.com/orderers/orderer3.liziblockchain.com/tls/server.crt
+              ServerTLSCert: crypto-config/ordererOrganizations/liziblockchain.com/orderers/orderer3.liziblockchain.com/tls/server.crt
+            - Host: orderer4.liziblockchain.com
               Port: 7050
-              ClientTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer4.lizitime.com/tls/server.crt
-              ServerTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer4.lizitime.com/tls/server.crt
-            - Host: orderer5.lizitime.com
+              ClientTLSCert: crypto-config/ordererOrganizations/liziblockchain.com/orderers/orderer4.liziblockchain.com/tls/server.crt
+              ServerTLSCert: crypto-config/ordererOrganizations/liziblockchain.com/orderers/orderer4.liziblockchain.com/tls/server.crt
+            - Host: orderer5.liziblockchain.com
               Port: 7050
-              ClientTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer5.lizitime.com/tls/server.crt
-              ServerTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer5.lizitime.com/tls/server.crt
+              ClientTLSCert: crypto-config/ordererOrganizations/liziblockchain.com/orderers/orderer5.liziblockchain.com/tls/server.crt
+              ServerTLSCert: crypto-config/ordererOrganizations/liziblockchain.com/orderers/orderer5.liziblockchain.com/tls/server.crt
 
     # Organizations is the list of orgs which are defined as participants on the orderer side of the network
     Organizations:
@@ -218,7 +218,7 @@ Profiles:
     #         OrdererType: kafka
     #         Kafka:
     #             Brokers:
-    #             - kafka.lizitime.com:9092
+    #             - kafka.liziblockchain.com:9092
 
     #         Organizations:
     #         - *OrdererOrg
@@ -243,32 +243,32 @@ Profiles:
             OrdererType: etcdraft
             EtcdRaft:
                 Consenters:
-                - Host: orderer.lizitime.com
+                - Host: orderer.liziblockchain.com
                   Port: 7050
-                  ClientTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/tls/server.crt
-                  ServerTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/tls/server.crt
-                - Host: orderer2.lizitime.com
+                  ClientTLSCert: crypto-config/ordererOrganizations/liziblockchain.com/orderers/orderer.liziblockchain.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/liziblockchain.com/orderers/orderer.liziblockchain.com/tls/server.crt
+                - Host: orderer2.liziblockchain.com
                   Port: 7050
-                  ClientTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer2.lizitime.com/tls/server.crt
-                  ServerTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer2.lizitime.com/tls/server.crt
-                - Host: orderer3.lizitime.com
+                  ClientTLSCert: crypto-config/ordererOrganizations/liziblockchain.com/orderers/orderer2.liziblockchain.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/liziblockchain.com/orderers/orderer2.liziblockchain.com/tls/server.crt
+                - Host: orderer3.liziblockchain.com
                   Port: 7050
-                  ClientTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer3.lizitime.com/tls/server.crt
-                  ServerTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer3.lizitime.com/tls/server.crt
-                - Host: orderer4.lizitime.com
+                  ClientTLSCert: crypto-config/ordererOrganizations/liziblockchain.com/orderers/orderer3.liziblockchain.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/liziblockchain.com/orderers/orderer3.liziblockchain.com/tls/server.crt
+                - Host: orderer4.liziblockchain.com
                   Port: 7050
-                  ClientTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer4.lizitime.com/tls/server.crt
-                  ServerTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer4.lizitime.com/tls/server.crt
-                - Host: orderer5.lizitime.com
+                  ClientTLSCert: crypto-config/ordererOrganizations/liziblockchain.com/orderers/orderer4.liziblockchain.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/liziblockchain.com/orderers/orderer4.liziblockchain.com/tls/server.crt
+                - Host: orderer5.liziblockchain.com
                   Port: 7050
-                  ClientTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer5.lizitime.com/tls/server.crt
-                  ServerTLSCert: crypto-config/ordererOrganizations/lizitime.com/orderers/orderer5.lizitime.com/tls/server.crt
+                  ClientTLSCert: crypto-config/ordererOrganizations/liziblockchain.com/orderers/orderer5.liziblockchain.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/liziblockchain.com/orderers/orderer5.liziblockchain.com/tls/server.crt
             Addresses:
-                - orderer.lizitime.com:7050
-                - orderer2.lizitime.com:7050
-                - orderer3.lizitime.com:7050
-                - orderer4.lizitime.com:7050
-                - orderer5.lizitime.com:7050
+                - orderer.liziblockchain.com:7050
+                - orderer2.liziblockchain.com:7050
+                - orderer3.liziblockchain.com:7050
+                - orderer4.liziblockchain.com:7050
+                - orderer5.liziblockchain.com:7050
 
             Organizations:
             - *OrdererOrg

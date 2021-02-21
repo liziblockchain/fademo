@@ -6,7 +6,7 @@ OrdererOrgs:
   # Orderer
   # ---------------------------------------------------------------------------
   - Name: Orderer
-    Domain: lizitime.com
+    Domain: liziblockchain.com
     EnableNodeOUs: true
     Specs:
       - Hostname: orderer
@@ -21,7 +21,7 @@ OrdererOrgs:
 PeerOrgs:
 
   - Name: Org1
-    Domain: org1.lizitime.com
+    Domain: org1.liziblockchain.com
     EnableNodeOUs: true
     Template:
       Count: 2
@@ -30,7 +30,7 @@ PeerOrgs:
 
 
   - Name: Org2
-    Domain: org2.lizitime.com
+    Domain: org2.liziblockchain.com
     EnableNodeOUs: true
     Template:
       Count: 2

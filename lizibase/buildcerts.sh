@@ -3,7 +3,7 @@ export FABRIC_CFG_PATH=${PWD}
 rm -rf channel-artifacts crypto-config
 mkdir channel-artifacts
 
-export CHANNEL_NAME=lizitimechannel
+export CHANNEL_NAME=liziblockchainchannel
 export SYS_CHANNEL="hngrid-sys-channel"
 
 cryptogen generate --config=./crypto-config.yaml

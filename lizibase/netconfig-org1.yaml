@@ -11,77 +11,80 @@ organizations:
   Org1:
     mspid: Org1MSP
     peers:
-    - peer0.org1.lizitime.com
-    - peer1.org1.lizitime.com
+    - peer0.org1.liziblockchain.com
+    - peer1.org1.liziblockchain.com
     certificateAuthorities:
-    - ca.org1.lizitime.com
+    - ca.org1.liziblockchain.com
 peers:
-  peer0.org1.lizitime.com:
+  peer0.org1.liziblockchain.com:
     url: grpcs://localhost:7051
     tlsCACerts:
       pem: |
         -----BEGIN CERTIFICATE-----
-        MIICWzCCAgKgAwIBAgIRAL1T8IwTf8STzGGwjgvYY0AwCgYIKoZIzj0EAwIweDEL
+        MIICdDCCAhugAwIBAgIQEaSaS6e70YIzHqel1fxUGDAKBggqhkjOPQQDAjCBhDEL
         MAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG
-        cmFuY2lzY28xGjAYBgNVBAoTEW9yZzEubGl6aXRpbWUuY29tMSAwHgYDVQQDExd0
-        bHNjYS5vcmcxLmxpeml0aW1lLmNvbTAeFw0yMDAyMTMxMzUxMDBaFw0zMDAyMTAx
-        MzUxMDBaMHgxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYD
-        VQQHEw1TYW4gRnJhbmNpc2NvMRowGAYDVQQKExFvcmcxLmxpeml0aW1lLmNvbTEg
-        MB4GA1UEAxMXdGxzY2Eub3JnMS5saXppdGltZS5jb20wWTATBgcqhkjOPQIBBggq
-        hkjOPQMBBwNCAATB7rMXqvnBSHyUGuvndPW9fTdC/6E1wbLtxmyxsL0pWqqUY8lB
-        Om7wBJ+XmSeNRtwHuz+fCiVgzxLzE/wNk3Wvo20wazAOBgNVHQ8BAf8EBAMCAaYw
-        HQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMA8GA1UdEwEB/wQFMAMBAf8w
-        KQYDVR0OBCIEIKoKdGj+8oTFKzBq7fPOvaFlL8ZHtfY7ZdgAgFhciM/sMAoGCCqG
-        SM49BAMCA0cAMEQCICo6dJK8fIqUZuQfXvcsHk7S8vy+p3iIPfGAkpUDXzYrAiAH
-        xJXssDu+kahEVUU4AlKy56kxMwedI3ZWic3A5nUgqA==
+        cmFuY2lzY28xIDAeBgNVBAoTF29yZzEubGl6aWJsb2NrY2hhaW4uY29tMSYwJAYD
+        VQQDEx10bHNjYS5vcmcxLmxpemlibG9ja2NoYWluLmNvbTAeFw0yMTAyMjEwNjMx
+        MDBaFw0zMTAyMTkwNjMxMDBaMIGEMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2Fs
+        aWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEgMB4GA1UEChMXb3JnMS5s
+        aXppYmxvY2tjaGFpbi5jb20xJjAkBgNVBAMTHXRsc2NhLm9yZzEubGl6aWJsb2Nr
+        Y2hhaW4uY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE577mplCPHSmJGV8Z
+        tj05jV2yrkTYfxg+/+noLr+DARU/7Or3s33p6LQWEtcU/EAkUmbMZA8+QBU4zZE7
+        8sV9LqNtMGswDgYDVR0PAQH/BAQDAgGmMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggr
+        BgEFBQcDATAPBgNVHRMBAf8EBTADAQH/MCkGA1UdDgQiBCAQPWbwqb+guoshsQAl
+        YWhH0BA3pwHDWCqdN36uTbspQDAKBggqhkjOPQQDAgNHADBEAiA9e79glPCtmNz9
+        IXAXzDqb2kSjUTIzGXNV2SiTkxH7bgIgY2brT50Kzq48A8drwbElGZvEAvEcaNhX
+        AQ3j1ej9CLI=
         -----END CERTIFICATE-----
         
     grpcOptions:
-      ssl-target-name-override: peer0.org1.lizitime.com
-      hostnameOverride: peer0.org1.lizitime.com
-  peer1.org1.lizitime.com:
+      ssl-target-name-override: peer0.org1.liziblockchain.com
+      hostnameOverride: peer0.org1.liziblockchain.com
+  peer1.org1.liziblockchain.com:
     url: grpcs://localhost:8051
     tlsCACerts:
       pem: |
         -----BEGIN CERTIFICATE-----
-        MIICWzCCAgKgAwIBAgIRAL1T8IwTf8STzGGwjgvYY0AwCgYIKoZIzj0EAwIweDEL
+        MIICdDCCAhugAwIBAgIQEaSaS6e70YIzHqel1fxUGDAKBggqhkjOPQQDAjCBhDEL
         MAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG
-        cmFuY2lzY28xGjAYBgNVBAoTEW9yZzEubGl6aXRpbWUuY29tMSAwHgYDVQQDExd0
-        bHNjYS5vcmcxLmxpeml0aW1lLmNvbTAeFw0yMDAyMTMxMzUxMDBaFw0zMDAyMTAx
-        MzUxMDBaMHgxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYD
-        VQQHEw1TYW4gRnJhbmNpc2NvMRowGAYDVQQKExFvcmcxLmxpeml0aW1lLmNvbTEg
-        MB4GA1UEAxMXdGxzY2Eub3JnMS5saXppdGltZS5jb20wWTATBgcqhkjOPQIBBggq
-        hkjOPQMBBwNCAATB7rMXqvnBSHyUGuvndPW9fTdC/6E1wbLtxmyxsL0pWqqUY8lB
-        Om7wBJ+XmSeNRtwHuz+fCiVgzxLzE/wNk3Wvo20wazAOBgNVHQ8BAf8EBAMCAaYw
-        HQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMA8GA1UdEwEB/wQFMAMBAf8w
-        KQYDVR0OBCIEIKoKdGj+8oTFKzBq7fPOvaFlL8ZHtfY7ZdgAgFhciM/sMAoGCCqG
-        SM49BAMCA0cAMEQCICo6dJK8fIqUZuQfXvcsHk7S8vy+p3iIPfGAkpUDXzYrAiAH
-        xJXssDu+kahEVUU4AlKy56kxMwedI3ZWic3A5nUgqA==
+        cmFuY2lzY28xIDAeBgNVBAoTF29yZzEubGl6aWJsb2NrY2hhaW4uY29tMSYwJAYD
+        VQQDEx10bHNjYS5vcmcxLmxpemlibG9ja2NoYWluLmNvbTAeFw0yMTAyMjEwNjMx
+        MDBaFw0zMTAyMTkwNjMxMDBaMIGEMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2Fs
+        aWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEgMB4GA1UEChMXb3JnMS5s
+        aXppYmxvY2tjaGFpbi5jb20xJjAkBgNVBAMTHXRsc2NhLm9yZzEubGl6aWJsb2Nr
+        Y2hhaW4uY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE577mplCPHSmJGV8Z
+        tj05jV2yrkTYfxg+/+noLr+DARU/7Or3s33p6LQWEtcU/EAkUmbMZA8+QBU4zZE7
+        8sV9LqNtMGswDgYDVR0PAQH/BAQDAgGmMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggr
+        BgEFBQcDATAPBgNVHRMBAf8EBTADAQH/MCkGA1UdDgQiBCAQPWbwqb+guoshsQAl
+        YWhH0BA3pwHDWCqdN36uTbspQDAKBggqhkjOPQQDAgNHADBEAiA9e79glPCtmNz9
+        IXAXzDqb2kSjUTIzGXNV2SiTkxH7bgIgY2brT50Kzq48A8drwbElGZvEAvEcaNhX
+        AQ3j1ej9CLI=
         -----END CERTIFICATE-----
         
     grpcOptions:
-      ssl-target-name-override: peer1.org1.lizitime.com
-      hostnameOverride: peer1.org1.lizitime.com
+      ssl-target-name-override: peer1.org1.liziblockchain.com
+      hostnameOverride: peer1.org1.liziblockchain.com
 certificateAuthorities:
-  ca.org1.lizitime.com:
+  ca.org1.liziblockchain.com:
     url: https://localhost:7054
     caName: ca-org1
     tlsCACerts:
       pem: |
         -----BEGIN CERTIFICATE-----
-        MIICVDCCAfugAwIBAgIQIHe2ytbXXM0QFrki6Gz2gjAKBggqhkjOPQQDAjB1MQsw
-        CQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy
-        YW5jaXNjbzEaMBgGA1UEChMRb3JnMS5saXppdGltZS5jb20xHTAbBgNVBAMTFGNh
-        Lm9yZzEubGl6aXRpbWUuY29tMB4XDTIwMDIxMzEzNTEwMFoXDTMwMDIxMDEzNTEw
-        MFowdTELMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcT
-        DVNhbiBGcmFuY2lzY28xGjAYBgNVBAoTEW9yZzEubGl6aXRpbWUuY29tMR0wGwYD
-        VQQDExRjYS5vcmcxLmxpeml0aW1lLmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEH
-        A0IABDbLY+e2psKV2qSVr7AkMEvwZ/5KRqdN2h1CgAXsh6O9dQ2bvcuWOrIulcnl
-        ebvVjCkfNDQIqjj0BcZz5wZ/RGyjbTBrMA4GA1UdDwEB/wQEAwIBpjAdBgNVHSUE
-        FjAUBggrBgEFBQcDAgYIKwYBBQUHAwEwDwYDVR0TAQH/BAUwAwEB/zApBgNVHQ4E
-        IgQgzBSRatoVPH2su61528LlCpgkm/PkHgAqEZSt7wQVKCMwCgYIKoZIzj0EAwID
-        RwAwRAIgCjUHTExj6StNtTx0gaSLWfVoM8OztYHyKNJIuh2gV7QCIFZ0FOihC5uN
-        wtm7n8250+N1i53Q3weZYaNaZ2WGXJsz
+        MIICcTCCAhagAwIBAgIRANv85SR19w9wcxYFD4j37fQwCgYIKoZIzj0EAwIwgYEx
+        CzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4g
+        RnJhbmNpc2NvMSAwHgYDVQQKExdvcmcxLmxpemlibG9ja2NoYWluLmNvbTEjMCEG
+        A1UEAxMaY2Eub3JnMS5saXppYmxvY2tjaGFpbi5jb20wHhcNMjEwMjIxMDYzMTAw
+        WhcNMzEwMjE5MDYzMTAwWjCBgTELMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlm
+        b3JuaWExFjAUBgNVBAcTDVNhbiBGcmFuY2lzY28xIDAeBgNVBAoTF29yZzEubGl6
+        aWJsb2NrY2hhaW4uY29tMSMwIQYDVQQDExpjYS5vcmcxLmxpemlibG9ja2NoYWlu
+        LmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABHEA6v4+dpVa0BOuevPtsiXy
+        FBfQ8j7FIuwIzWmDe/7euhIGIW22Sg1Ca1eWjm+wZjoblIZWICIULtRkQ5EUBv+j
+        bTBrMA4GA1UdDwEB/wQEAwIBpjAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUH
+        AwEwDwYDVR0TAQH/BAUwAwEB/zApBgNVHQ4EIgQgKioLuFXCrpsGAEN0k1X+8Y7e
+        CC7jE+i6KxBaTZC9LGowCgYIKoZIzj0EAwIDSQAwRgIhAPS7LbAifMhawJvfFjdb
+        b7p41Oz88lNqIKlj/O1sQDx7AiEAoTQs20qX9HIK8WK2Lk49EpvCXodN7ge+tQzJ
+        tNN2qrA=
         -----END CERTIFICATE-----
         
     httpOptions:

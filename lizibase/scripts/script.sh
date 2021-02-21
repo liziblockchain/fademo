@@ -16,7 +16,7 @@ CHANNEL_NAME="$1"
 : ${TIMEOUT:="60"}
 COUNTER=1
 MAX_RETRY=5
-ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp/tlscacerts/tlsca.lizitime.com-cert.pem
+ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/liziblockchain.com/orderers/orderer.liziblockchain.com/msp/tlscacerts/tlsca.liziblockchain.com-cert.pem
 
 echo "Channel name : "$CHANNEL_NAME
 
@@ -33,21 +33,21 @@ setGlobals () {
 
 	if [ $1 -eq 0 -o $1 -eq 1 ] ; then
 		CORE_PEER_LOCALMSPID="Org1MSP"
-		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.lizitime.com/peers/peer0.org1.lizitime.com/tls/ca.crt
-		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.lizitime.com/users/Admin@org1.lizitime.com/msp
+		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.liziblockchain.com/peers/peer0.org1.liziblockchain.com/tls/ca.crt
+		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.liziblockchain.com/users/Admin@org1.liziblockchain.com/msp
 		if [ $1 -eq 0 ]; then
-			CORE_PEER_ADDRESS=peer0.org1.lizitime.com:7051
+			CORE_PEER_ADDRESS=peer0.org1.liziblockchain.com:7051
 		else
-			CORE_PEER_ADDRESS=peer1.org1.lizitime.com:7051
+			CORE_PEER_ADDRESS=peer1.org1.liziblockchain.com:7051
 		fi
 	else
 		CORE_PEER_LOCALMSPID="Org2MSP"
-		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.lizitime.com/peers/peer0.org2.lizitime.com/tls/ca.crt
-		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.lizitime.com/users/Admin@org2.lizitime.com/msp
+		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.liziblockchain.com/peers/peer0.org2.liziblockchain.com/tls/ca.crt
+		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.liziblockchain.com/users/Admin@org2.liziblockchain.com/msp
 		if [ $1 -eq 2 ]; then
-			CORE_PEER_ADDRESS=peer0.org2.lizitime.com:7051
+			CORE_PEER_ADDRESS=peer0.org2.liziblockchain.com:7051
 		else
-			CORE_PEER_ADDRESS=peer1.org2.lizitime.com:7051
+			CORE_PEER_ADDRESS=peer1.org2.liziblockchain.com:7051
 		fi
 	fi
 
@@ -58,7 +58,7 @@ checkOSNAvailability() {
 	#Use orderer's MSP for fetching system channel config block
 	CORE_PEER_LOCALMSPID="OrdererMSP"
 	CORE_PEER_TLS_ROOTCERT_FILE=$ORDERER_CA
-	CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp
+	CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/liziblockchain.com/orderers/orderer.liziblockchain.com/msp
 
 	local rc=1
 	local starttime=$(date +%s)
@@ -70,9 +70,9 @@ checkOSNAvailability() {
 		 sleep 3
 		 echo "Attempting to fetch system channel 'testchainid' ...$(($(date +%s)-starttime)) secs"
 		 if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
-			 peer channel fetch 0 -o orderer.lizitime.com:7050 -c "testchainid" >&log.txt
+			 peer channel fetch 0 -o orderer.liziblockchain.com:7050 -c "testchainid" >&log.txt
 		 else
-			 peer channel fetch 0 0_block.pb -o orderer.lizitime.com:7050 -c "testchainid" --tls --cafile $ORDERER_CA >&log.txt
+			 peer channel fetch 0 0_block.pb -o orderer.liziblockchain.com:7050 -c "testchainid" --tls --cafile $ORDERER_CA >&log.txt
 		 fi
 		 test $? -eq 0 && VALUE=$(cat log.txt | awk '/Received block/ {print $NF}')
 		 test "$VALUE" = "0" && let rc=0
@@ -86,9 +86,9 @@ checkOSNAvailability() {
 createChannel() {
 	setGlobals 0
 	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
-		peer channel create -o orderer.lizitime.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/channel.tx >&log.txt
+		peer channel create -o orderer.liziblockchain.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/channel.tx >&log.txt
 	else
-		peer channel create -o orderer.lizitime.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/channel.tx --tls --cafile $ORDERER_CA >&log.txt
+		peer channel create -o orderer.liziblockchain.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/channel.tx --tls --cafile $ORDERER_CA >&log.txt
 	fi
 	res=$?
 	cat log.txt
@@ -102,9 +102,9 @@ updateAnchorPeers() {
         setGlobals $PEER
 
         if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
-		peer channel update -o orderer.lizitime.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx >&log.txt
+		peer channel update -o orderer.liziblockchain.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx >&log.txt
 	else
-		peer channel update -o orderer.lizitime.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls --cafile $ORDERER_CA >&log.txt
+		peer channel update -o orderer.liziblockchain.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls --cafile $ORDERER_CA >&log.txt
 	fi
 	res=$?
 	cat log.txt
@@ -157,9 +157,9 @@ instantiateChaincode () {
 	# while 'peer chaincode' command can get the orderer endpoint from the peer (if join was successful),
 	# lets supply it directly as we know it using the "-o" option
 	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
-		peer chaincode instantiate -o orderer.lizitime.com:7050 -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org1MSP.peer','Org2MSP.peer')" >&log.txt
+		peer chaincode instantiate -o orderer.liziblockchain.com:7050 -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org1MSP.peer','Org2MSP.peer')" >&log.txt
 	else
-		peer chaincode instantiate -o orderer.lizitime.com:7050 --tls --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org1MSP.peer','Org2MSP.peer')" >&log.txt
+		peer chaincode instantiate -o orderer.liziblockchain.com:7050 --tls --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org1MSP.peer','Org2MSP.peer')" >&log.txt
 	fi
 	res=$?
 	cat log.txt
@@ -203,9 +203,9 @@ chaincodeInvoke () {
 	# while 'peer chaincode' command can get the orderer endpoint from the peer (if join was successful),
 	# lets supply it directly as we know it using the "-o" option
 	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
-		peer chaincode invoke -o orderer.lizitime.com:7050 -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt
+		peer chaincode invoke -o orderer.liziblockchain.com:7050 -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt
 	else
-		peer chaincode invoke -o orderer.lizitime.com:7050  --tls --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt
+		peer chaincode invoke -o orderer.liziblockchain.com:7050  --tls --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt
 	fi
 	res=$?
 	cat log.txt
