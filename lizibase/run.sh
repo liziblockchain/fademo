@@ -57,9 +57,10 @@ function networkUp () {
   fi
 }
 
-function startTest () {
+# startTest_v14x 中的命令都是在 v1.4.x中顺利执行的，在v2.2.x也可以顺利执行
+function startTest_v14x () {
 
-    DELAY=3S
+    DELAY=2S
     echo "lizitime-----------:  create channel"
     docker exec cli peer channel create -o orderer.lizitime.com:7050 -c lizitimechannel -f ./channel-artifacts/channel.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp/tlscacerts/tlsca.lizitime.com-cert.pem
 
@@ -114,6 +115,86 @@ function startTest () {
 
 }
 
+
+# startTest_v22x 中的命令都是在 v2.2.x中顺利执行的
+function startTest_v22x () {
+
+    DELAY=2S
+    echo "lizitime-----------:  create channel"
+    # docker exec cli     peer channel create -o orderer.lizitime.com:7050 -c lizitimechannel -f ./channel-artifacts/channel.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp/tlscacerts/tlsca.lizitime.com-cert.pem
+
+docker exec cli peer channel create -o orderer.lizitime.com:7050 -c lizitimechannel --ordererTLSHostnameOverride orderer.lizitime.com -f ./channel-artifacts/channel.tx --outputBlock ./lizitimechannel.block --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp/tlscacerts/tlsca.lizitime.com-cert.pem
+
+
+
+
+    sleep $DELAY
+    echo "lizitime-----------:  join channel"
+    docker exec cli peer channel join -b ./lizitimechannel.block
+
+    sleep $DELAY
+    echo "lizitime-----------:  install chaincode"
+    # docker exec cli peer chaincode package -n mycc -v 1.0 -p github.com/hyperledger/fabric/chaincode/go  myccpack.out
+    # peer lifecycle chaincode package basic.tar.gz --path ../asset-transfer-basic/chaincode-go --lang golang --label basic_1.0
+
+    docker exec cli peer lifecycle chaincode package basic.tar.gz --path github.com/hyperledger/fabric/chaincode/go --lang golang --label basic_1.0
+
+    # docker exec cli peer chaincode install myccpack.out
+    docker exec cli peer lifecycle chaincode install basic.tar.gz
+    # Installing chaincode on peer0.org1
+    # peer lifecycle chaincode install basic.tar.gz
+    # Install chaincode on peer0.org2...
+    # peer lifecycle chaincode install basic.tar.gz
+
+    # Using organization 1
+    # peer lifecycle chaincode queryinstalled
+    docker exec cli peer lifecycle chaincode queryinstalled
+
+
+    docker exec cli peer lifecycle chaincode approveformyorg -o orderer.lizitime.com:7050 --ordererTLSHostnameOverride orderer.lizitime.com --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp/tlscacerts/tlsca.lizitime.com-cert.pem --channelID lizitimechannel --name basic --version 1.0 --package-id basic_1.0:b8ee3a23493f35e655b3b0bff7c8c0091d5c32a74d692f9a8f8e75f3d7618af2 --sequence 1
+
+    # Using organization 1
+    # peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile /work/fabric/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem --channelID mychannel --name basic --version 1.0 --package-id basic_1.0:4ec191e793b27e953ff2ede5a8bcc63152cecb1e4c3f301a26e22692c61967ad --sequence 1
+
+    # Using organization 1
+    # Checking the commit readiness of the chaincode definition on peer0.org1 on channel 'mychannel'...
+    # peer lifecycle chaincode checkcommitreadiness --channelID mychannel --name basic --version 1.0 --sequence 1 --output json
+    # Using organization 2
+    # Checking the commit readiness of the chaincode definition on peer0.org2 on channel 'mychannel'...
+    # peer lifecycle chaincode checkcommitreadiness --channelID mychannel --name basic --version 1.0 --sequence 1 --output json
+
+    # Using organization 2
+    peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile /work/fabric/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem --channelID mychannel --name basic --version 1.0 --package-id basic_1.0:4ec191e793b27e953ff2ede5a8bcc63152cecb1e4c3f301a26e22692c61967ad --sequence 1
+    # Using organization 1
+    # Checking the commit readiness of the chaincode definition on peer0.org1 on channel 'mychannel'...
+    peer lifecycle chaincode checkcommitreadiness --channelID mychannel --name basic --version 1.0 --sequence 1 --output json
+    # Using organization 2
+    # Checking the commit readiness of the chaincode definition on peer0.org2 on channel 'mychannel'...
+    peer lifecycle chaincode checkcommitreadiness --channelID mychannel --name basic --version 1.0 --sequence 1 --output json
+
+
+
+    sleep $DELAY
+    echo "lizitime-----------:  instantiate chaincode"
+    docker exec cli peer chaincode instantiate -o orderer.lizitime.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp/tlscacerts/tlsca.lizitime.com-cert.pem -C lizitimechannel -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}'
+
+    sleep $DELAY
+    echo "lizitime-----------:  query a"
+    docker exec cli peer chaincode query -C lizitimechannel -n mycc -c '{"Args":["query", "a"]}'
+    echo "lizitime-----------:  query b"
+    docker exec cli peer chaincode query -C lizitimechannel -n mycc -c '{"Args":["query", "b"]}'
+
+    echo "lizitime-----------:  invoke chaincode"
+    docker exec cli peer chaincode invoke -C lizitimechannel -n mycc  -c '{"Args":["invoke", "a", "b", "1"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lizitime.com/orderers/orderer.lizitime.com/msp/tlscacerts/tlsca.lizitime.com-cert.pem
+
+    sleep $DELAY
+    echo "lizitime-----------:  query a"
+    docker exec cli peer chaincode query -C lizitimechannel -n mycc -c '{"Args":["query", "a"]}'
+    echo "lizitime-----------:  query b"
+    docker exec cli peer chaincode query -C lizitimechannel -n mycc -c '{"Args":["query", "b"]}'
+
+}
+
 function networkDown () {
     docker-compose -f $COMPOSE_FILE  -f $COMPOSE_FILE_PEER0ORG1 down
 
@@ -133,7 +214,7 @@ validateArgs
 if [ "${UP_DOWN}" == "up" ]; then
         networkUp
         sleep 15
-        startTest
+        startTest_v14x
 elif [ "${UP_DOWN}" == "down" ]; then ## Clear the network
 	networkDown
 elif [ "${UP_DOWN}" == "test" ]; then ## Clear the network

@@ -5,12 +5,15 @@ SPDX-License-Identifier: Apache-2.0
 package main
 
 import (
-	"log"
-	"fmt"
 	"encoding/json"
+	"fmt"
+	"log"
 
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
+	// "github.com/hyperledger/fabric-samples/asset-transfer-basic/chaincode-go/chaincode"
+	// "github.com/hyperledger/fabric-samples/asset-transfer-basic/chaincode-go/chaincode"
 	// "github.com/liziblockchain/fademo/lizibase/chaincode/go/chaincode"
+	// "chaincode"
 	// "chaincode"
 	// "/fademo/lizibase/chaincode/go/chaincode"
 )
@@ -26,10 +29,6 @@ func main() {
 		log.Panicf("Error starting asset-transfer-basic chaincode: %v", err)
 	}
 }
-
-
-
-
 
 // SmartContract provides functions for managing an Asset
 type SmartContract struct {
